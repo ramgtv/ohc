@@ -21,13 +21,11 @@ import java.util.Arrays;
 final class KeyBuffer
 {
     final byte[] buffer;
-    private final int size;
     private long hash;
 
     KeyBuffer(int size)
     {
         buffer = new byte[size];
-        this.size = size;
     }
 
     long hash()
@@ -49,7 +47,7 @@ final class KeyBuffer
 
         KeyBuffer keyBuffer = (KeyBuffer) o;
 
-        return size == keyBuffer.size && Arrays.equals(keyBuffer.buffer, buffer);
+        return buffer.length == keyBuffer.buffer.length && Arrays.equals(keyBuffer.buffer, buffer);
     }
 
     public int hashCode()
@@ -68,10 +66,11 @@ final class KeyBuffer
     @Override
     public String toString()
     {
-        StringBuilder sb = new StringBuilder(size * 3);
-        for (int ii = 0; ii < size; ii++) {
+        byte[] b = buffer;
+        StringBuilder sb = new StringBuilder(b.length * 3);
+        for (int ii = 0; ii < b.length; ii++) {
             if (ii % 8 == 0 && ii != 0) sb.append('\n');
-            sb.append(pad(buffer[ii]));
+            sb.append(pad(b[ii]));
             sb.append(' ');
         }
         return sb.toString();
@@ -88,7 +87,7 @@ final class KeyBuffer
             return false;
 
         long serKeyLen = HashEntries.getKeyLen(hashEntryAdr);
-        return serKeyLen == size && compareKey(hashEntryAdr);
+        return serKeyLen == buffer.length && compareKey(hashEntryAdr);
     }
 
     private boolean compareKey(long hashEntryAdr)
