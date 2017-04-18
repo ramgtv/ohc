@@ -9,6 +9,8 @@ BREAKING CHANGES
   This means that this version of OHC requires a recompilation of code that uses OHC and cannot be
   used as a drop-in replacement (i.e. just replace a jar).
 
+non-breaking changes
+--------------------
 
 #37 non-evicting mode
 #34 add WTinyLFU
